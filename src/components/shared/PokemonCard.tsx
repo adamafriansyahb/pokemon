@@ -24,8 +24,9 @@ const PokemonCard = ({ caughtCount, nickname, onReleaseButtonClicked, pokemon }:
       whileInView={{ opacity: 1, y: 0 }}
     >
       <Card className="w-full">
-        <CardHeader className="p-2">
-          <CardTitle className="text-xl">{`#${pokemon.id} ${pokemon.name}`}</CardTitle>
+        <CardHeader className="p-2 space-y-0">
+          <p className="text-sm">#{pokemon.id}</p>
+          <CardTitle className="text-lg">{pokemon.name}</CardTitle>
         </CardHeader>
         <CardContent className='pb-0'>
           <div className="relative flex justify-center">

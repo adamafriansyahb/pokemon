@@ -56,4 +56,9 @@ export type PokemonDetail = {
   weight: number;
 };
 
-export type ReleaseType = 'all' | 'single';
+export enum ReleaseTypes {
+  all = 'all',
+  single = 'single',
+}
+
+export type TReleaseAction = ReleaseTypes.all | ReleaseTypes.single;

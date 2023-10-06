@@ -17,9 +17,10 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
+import { PokemonDetail } from '@/types';
 
 type TPokemonDetailContainer = {
-  pokemon: any;
+  pokemon: PokemonDetail;
 };
 
 const PokemonDetailsContainer = ({ pokemon }: TPokemonDetailContainer) => {
@@ -67,7 +68,7 @@ const PokemonDetailsContainer = ({ pokemon }: TPokemonDetailContainer) => {
       variant: 'default',
       title: `Good job!, ${nickname} the ${pokemon.name} has joined your team`,
       // eslint-disable-next-line quotes
-      description: "Don't give up, catch them again!",
+      description: `Go catch another pokemon to accompany ${nickname}.`,
     });
   };
 
@@ -104,7 +105,7 @@ const PokemonDetailsContainer = ({ pokemon }: TPokemonDetailContainer) => {
           <div className="grid grid-cols-2 gap-2">
             <PokemonStatsChip index={0} name="height (m)" value={pokemon.height / 10} />
             <PokemonStatsChip index={1} name="weight (kg)" value={pokemon.weight / 10} />
-            {pokemon.stats.map((statistic: any, idx: number) => (
+            {pokemon.stats.map((statistic, idx: number) => (
               <PokemonStatsChip
                 index={idx + 2}
                 key={statistic.stat.name}

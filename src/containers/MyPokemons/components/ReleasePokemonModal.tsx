@@ -7,13 +7,13 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { ReleaseType, TCaughtPokemon } from '@/types';
+import { TReleaseAction, TCaughtPokemon } from '@/types';
 import Image from 'next/image';
 
 type TReleasePokemonModal = {
   onReleasePokemon: () => void;
   open: boolean;
-  releaseType: ReleaseType;
+  releaseType: TReleaseAction;
   selectedPokemon?: TCaughtPokemon;
   setOpen: (isOpen: boolean) => void;
 };
