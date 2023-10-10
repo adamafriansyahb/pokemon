@@ -37,8 +37,10 @@ export const GET_POKEMON = gql`
       }
       name
       sprites {
-        front_default
         back_default
+        back_shiny
+        front_default
+        front_shiny
       }
       stats {
         effort

@@ -2,7 +2,6 @@
 
 import { useCallback, useContext, useEffect, useState } from 'react';
 import Link from 'next/link';
-import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { TGetAllPokemonsResponse, PokemonItem } from '@/types';
 import { useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr';
@@ -70,17 +69,13 @@ const AllPokemonsContainer = ({ initialPokemons }: AllPokemonsContainerType) => 
   }, [scrollListener, scrollPage, setScrollPage, pokemons]);
 
   return (
-    <div className="flex flex-col space-y-5 lg:max-w-5xl">
+    <div className="flex flex-col space-y-5">
       <PageTitle
         title="Meet the Pokemons &#128572;"
         subtitle="Get to know the pokemons that exist in this universe. Catch us if you can!"
       />
 
       <Separator />
-
-      <section>
-        <Input className="md:max-w-md" type="text" placeholder="Search pokemons..." />
-      </section>
 
       <section className="grid grid-cols-2 lg:grid-cols-4 gap-2.5">
         {pokemons.map((pokemon) => (

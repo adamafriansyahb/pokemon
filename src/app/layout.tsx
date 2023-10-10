@@ -20,7 +20,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ApolloWrapper>
           <PokemonProvider>
             <Navbar />
-            <section className="px-4 lg:px-24 py-24 flex justify-center">{children}</section>
+            <main className="flex justify-center px-4 py-24">
+              <section className="w-full lg:max-w-5xl">{children}</section>
+            </main>
             <Toaster />
           </PokemonProvider>
         </ApolloWrapper>

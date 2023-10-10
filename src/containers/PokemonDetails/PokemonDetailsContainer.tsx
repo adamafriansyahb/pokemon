@@ -17,7 +17,10 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
-import { PokemonDetail } from '@/types';
+import { PokemonDetail, TPokemonType } from '@/types';
+import { pokemonFromColors, pokemonToColors } from '@/lib/constants';
+import { cn } from '@/lib/utils';
+import { Badge } from '@/components/ui/badge';
 
 type TPokemonDetailContainer = {
   pokemon: PokemonDetail;
@@ -31,7 +34,7 @@ const PokemonDetailsContainer = ({ pokemon }: TPokemonDetailContainer) => {
   ];
 
   const { toast } = useToast();
-  const { canCatchPokemon, catchPokemon, isNicknameAvailable } = useContext(PokemonContext);
+  const { canCatchPokemon, catchPokemon, countCaughtPokemonById, isNicknameAvailable } = useContext(PokemonContext);
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [nickname, setNickname] = useState('');
@@ -43,7 +46,7 @@ const PokemonDetailsContainer = ({ pokemon }: TPokemonDetailContainer) => {
     } else {
       toast({
         variant: 'destructive',
-        title: 'Oops! The pokemon ran away 😫',
+        title: 'Oops! The pokemon ran away 🐈💨',
         // eslint-disable-next-line quotes
         description: "Don't give up, catch them again!",
       });
@@ -72,9 +75,17 @@ const PokemonDetailsContainer = ({ pokemon }: TPokemonDetailContainer) => {
     });
   };
 
+  const dominantType = pokemon.types[0].type.name as TPokemonType;
+
+  const getGradient = () => {
+    const secondaryType = pokemon.types.length > 1 ? (pokemon.types[1].type.name as TPokemonType) : dominantType;
+
+    return `bg-gradient-to-br ${pokemonFromColors[dominantType]} ${pokemonToColors[secondaryType]}`;
+  };
+
   return (
     <section className="relative">
-      <section className="flex justify-center">
+      <section className={cn('flex justify-center pt-24 pb-5 -mx-4 sm:mx-0 -mt-24 rounded-b-[35px]', getGradient())}>
         <Image
           alt="pokemon-img"
           src={pokemon.sprites.front_default}
@@ -85,14 +96,20 @@ const PokemonDetailsContainer = ({ pokemon }: TPokemonDetailContainer) => {
       </section>
 
       <section className="flex flex-col space-y-4 mt-5">
-        <motion.h1
-          initial={{ opacity: 0, x: -100 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.2 }}
-          className="text-3xl lg:text-4xl font-bold"
-        >
-          {`#${pokemon.id} ${pokemon.name}`}
-        </motion.h1>
+        <div className="flex justify-between items-center">
+          <motion.h1
+            initial={{ opacity: 0, x: -100 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.2 }}
+            className="text-3xl lg:text-4xl font-bold tracking-wide"
+          >
+            {`${pokemon.name}`}
+          </motion.h1>
+
+          <motion.div initial={{ opacity: 0, x: 100 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.2 }}>
+            <Badge className="py-1">{countCaughtPokemonById(pokemon.id)} owned</Badge>
+          </motion.div>
+        </div>
 
         <section>
           <motion.h2
@@ -102,7 +119,7 @@ const PokemonDetailsContainer = ({ pokemon }: TPokemonDetailContainer) => {
           >
             Stats:
           </motion.h2>
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
             <PokemonStatsChip index={0} name="height (m)" value={pokemon.height / 10} />
             <PokemonStatsChip index={1} name="weight (kg)" value={pokemon.weight / 10} />
             {pokemon.stats.map((statistic, idx: number) => (
@@ -150,9 +167,7 @@ const PokemonDetailsContainer = ({ pokemon }: TPokemonDetailContainer) => {
                 />
               </div>
               <Input onChange={handleNicknameChange} placeholder="Insert a nickname here..." />
-              {!isNicknameValid && (
-                <p className='text-xs text-red-600'>Nickname is already used.</p>
-              )}
+              {!isNicknameValid && <p className="text-xs text-red-600">Nickname is already used.</p>}
             </section>
 
             <DialogFooter>

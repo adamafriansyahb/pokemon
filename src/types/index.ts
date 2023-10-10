@@ -37,6 +37,13 @@ export type Ability = TPokemonChip<'ability'>;
 export type Move = TPokemonChip<'move'>;
 export type Type = TPokemonChip<'type'>;
 
+type Sprites = {
+  back_default: string;
+  back_shiny: string;
+  front_default: string;
+  front_shiny: string;
+};
+
 export type Stat = {
   base_stat: number;
   effort: number;
@@ -50,7 +57,7 @@ export type PokemonDetail = {
   message: string;
   moves: Move[];
   name: string;
-  sprites: { back_default: string; front_default: string };
+  sprites: Sprites;
   stats: Stat[];
   types: Type[];
   weight: number;
@@ -62,3 +69,23 @@ export enum ReleaseTypes {
 }
 
 export type TReleaseAction = ReleaseTypes.all | ReleaseTypes.single;
+
+export type TPokemonType =
+  | 'normal'
+  | 'ghost'
+  | 'fire'
+  | 'water'
+  | 'electric'
+  | 'grass'
+  | 'ice'
+  | 'fighting'
+  | 'poison'
+  | 'ground'
+  | 'flying'
+  | 'psychic'
+  | 'bug'
+  | 'rock'
+  | 'dragon'
+  | 'dark'
+  | 'steel'
+  | 'fairy';

@@ -91,7 +91,7 @@ const MyPokemonsContainer = () => {
   }, [isDialogOpen]);
 
   return (
-    <div className="w-full lg:max-w-5xl flex flex-col space-y-5">
+    <div className="flex flex-col space-y-5">
       <PageTitle title="My Pokemons" subtitle={pageSubtitle} />
 
       <Separator />
