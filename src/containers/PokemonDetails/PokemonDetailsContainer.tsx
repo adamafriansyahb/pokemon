@@ -107,7 +107,7 @@ const PokemonDetailsContainer = ({ pokemon }: TPokemonDetailContainer) => {
           </motion.h1>
 
           <motion.div initial={{ opacity: 0, x: 100 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.2 }}>
-            <Badge className="py-1">{countCaughtPokemonById(pokemon.id)} owned</Badge>
+            <Badge className="py-1" variant="gradient">{countCaughtPokemonById(pokemon.id)} owned</Badge>
           </motion.div>
         </div>
 

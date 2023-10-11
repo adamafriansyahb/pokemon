@@ -24,23 +24,27 @@ const PokemonCard = ({ caughtCount, nickname, onReleaseButtonClicked, pokemon }:
       whileInView={{ opacity: 1, y: 0 }}
     >
       <Card className="w-full">
-        <CardHeader className="p-2 space-y-0">
+        <CardHeader className="p-2 -space-y-2">
           <p className="text-sm">#{pokemon.id}</p>
           <CardTitle className="text-lg">{pokemon.name}</CardTitle>
         </CardHeader>
-        <CardContent className='pb-0'>
+        <CardContent className="px-2 pb-0">
           <div className="relative flex justify-center">
             <Image alt="Pokemon Image" className="object-cover" height={200} src={pokemon.image} width={200} />
           </div>
-          {nickname && <p className="bg-gray-100 rounded-lg text-center text-sm font-medium p-1 overflow-clip text-ellipsis">{nickname}</p>}
+          {nickname && (
+            <p className="bg-gray-100 rounded-lg text-center text-sm font-medium p-1 overflow-clip text-ellipsis">
+              {nickname}
+            </p>
+          )}
         </CardContent>
         <CardFooter className="flex justify-end p-2">
           {nickname ? (
-            <Button onClick={onReleaseButtonClicked} variant="ghost">
+            <Button onClick={onReleaseButtonClicked} variant="destructive">
               <Trash2 />
             </Button>
           ) : (
-            <Badge>{`${caughtCount} owned`}</Badge>
+            <Badge variant="gradient">{`${caughtCount} owned`}</Badge>
           )}
         </CardFooter>
       </Card>

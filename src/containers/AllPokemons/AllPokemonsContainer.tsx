@@ -71,7 +71,7 @@ const AllPokemonsContainer = ({ initialPokemons }: AllPokemonsContainerType) => 
   return (
     <div className="flex flex-col space-y-5">
       <PageTitle
-        title="Meet the Pokemons &#128572;"
+        title="Meet the Pokemons"
         subtitle="Get to know the pokemons that exist in this universe. Catch us if you can!"
       />
 

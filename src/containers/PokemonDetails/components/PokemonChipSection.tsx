@@ -31,7 +31,7 @@ const PokemonChipSection = ({ data, index, sectionName, title }: TPokemonChipSec
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <Badge className={cn('text-base', sectionName === 'type' && getColor(item.type.name))}>
+            <Badge className={cn('text-base dark:bg-slate-800 dark:text-white', sectionName === 'type' && getColor(item.type.name))}>
               {item[`${sectionName}`].name}
             </Badge>
           </motion.div>

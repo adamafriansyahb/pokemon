@@ -31,7 +31,7 @@ const PokemonStatsChip = ({ index, name, value }: TPokemonStatChip) => {
   return (
     <motion.div
       animate={{ opacity: 1, y: 0 }}
-      className="flex justify-between items-center bg-gray-100 p-2 rounded-lg"
+      className="flex justify-between items-center bg-gray-100 dark:bg-slate-800 p-2 rounded-lg"
       initial={{ opacity: 0, y: 20 }}
       transition={{ delay: index * 0.1 }}
     >
