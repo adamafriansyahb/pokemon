@@ -138,7 +138,9 @@ const MyPokemonsContainer = () => {
           </div>
 
           <Link href="/">
-            <Button className="tracking-wider bg-gradient-to-br from-emerald-500 to-blue-500 font-semibold dark:text-white">Discover Pokemons</Button>
+            <Button className="tracking-wider bg-gradient-to-br from-emerald-500 to-blue-500 font-semibold dark:text-white">
+              Discover Pokemons
+            </Button>
           </Link>
         </section>
       )}

@@ -22,7 +22,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <ThemeProvider attribute="class" defaultTheme="dark" disableTransitionOnChange enableSystem={false}>
             <PokemonProvider>
               <Navbar />
-              <main className="flex justify-center px-4 py-24">
+              <main className="flex justify-center px-4 pt-24 pb-20">
                 <section className="w-full lg:max-w-5xl">{children}</section>
               </main>
               <Toaster />
