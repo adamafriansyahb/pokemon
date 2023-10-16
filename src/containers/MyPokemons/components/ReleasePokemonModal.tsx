@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -9,7 +10,6 @@ import {
 } from '@/components/ui/dialog';
 import { toTitleCase } from '@/lib/utils';
 import { TReleaseAction, TCaughtPokemon } from '@/types';
-import Image from 'next/image';
 
 type TReleasePokemonModal = {
   onReleasePokemon: () => void;

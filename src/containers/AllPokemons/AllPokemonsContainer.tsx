@@ -1,7 +1,6 @@
 'use client';
 
 import { useContext } from 'react';
-import Link from 'next/link';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { PokemonList } from '@/types';
 import { useSuspenseQuery } from '@apollo/experimental-nextjs-app-support/ssr';
@@ -62,9 +61,7 @@ const AllPokemonsContainer = () => {
       >
         <section className="grid grid-cols-2 lg:grid-cols-4 gap-2.5">
           {data.pokemons.results.map((pokemon) => (
-            <Link href={`/pokemon/${pokemon.name}`} key={pokemon.id}>
-              <PokemonCard caughtCount={countCaughtPokemonById(pokemon.id)} pokemon={pokemon} />
-            </Link>
+            <PokemonCard key={pokemon.id} caughtCount={countCaughtPokemonById(pokemon.id)} pokemon={pokemon} />
           ))}
         </section>
       </InfiniteScroll>
