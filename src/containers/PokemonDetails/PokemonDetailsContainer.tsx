@@ -16,11 +16,11 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
+import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { PokemonDetail, TPokemonType } from '@/types';
-import { pokemonFromColors, pokemonToColors } from '@/lib/constants';
-import { cn } from '@/lib/utils';
-import { Badge } from '@/components/ui/badge';
+import { pokemonBgColors, pokemonFromColors, pokemonToColors } from '@/lib/constants';
+import { cn, toTitleCase } from '@/lib/utils';
 
 type TPokemonDetailContainer = {
   pokemon: PokemonDetail;
@@ -69,9 +69,9 @@ const PokemonDetailsContainer = ({ pokemon }: TPokemonDetailContainer) => {
     setIsDialogOpen(false);
     toast({
       variant: 'default',
-      title: `Good job!, ${nickname} the ${pokemon.name} has joined your team`,
+      title: `Good job!, ${toTitleCase(nickname)} the ${toTitleCase(pokemon.name)} has joined your team`,
       // eslint-disable-next-line quotes
-      description: `Go catch another pokemon to accompany ${nickname}.`,
+      description: `Go catch another pokemon to accompany ${toTitleCase(nickname)}.`,
     });
   };
 
@@ -103,7 +103,7 @@ const PokemonDetailsContainer = ({ pokemon }: TPokemonDetailContainer) => {
             transition={{ duration: 0.2 }}
             className="text-3xl lg:text-4xl font-bold tracking-wide"
           >
-            {`${pokemon.name}`}
+            {toTitleCase(pokemon.name)}
           </motion.h1>
 
           <motion.div initial={{ opacity: 0, x: 100 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.2 }}>
@@ -120,8 +120,8 @@ const PokemonDetailsContainer = ({ pokemon }: TPokemonDetailContainer) => {
             Stats:
           </motion.h2>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
-            <PokemonStatsChip index={0} name="height (m)" value={pokemon.height / 10} />
-            <PokemonStatsChip index={1} name="weight (kg)" value={pokemon.weight / 10} />
+            <PokemonStatsChip index={0} name="Height (m)" value={pokemon.height / 10} />
+            <PokemonStatsChip index={1} name="Weight (kg)" value={pokemon.weight / 10} />
             {pokemon.stats.map((statistic, idx: number) => (
               <PokemonStatsChip
                 index={idx + 2}
@@ -144,7 +144,7 @@ const PokemonDetailsContainer = ({ pokemon }: TPokemonDetailContainer) => {
         ))}
       </section>
 
-      <Button onClick={handleOpenDialog} className="fixed right-5 bottom-5" variant="destructive">
+      <Button onClick={handleOpenDialog} className={cn('fixed right-5 bottom-5 font-bold text-white dark:text-white', pokemonBgColors[dominantType])}>
         Catch
       </Button>
 
@@ -152,7 +152,7 @@ const PokemonDetailsContainer = ({ pokemon }: TPokemonDetailContainer) => {
         <form>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>You caught {pokemon.name}! &#129395;</DialogTitle>
+              <DialogTitle>You caught {toTitleCase(pokemon.name)}! &#129395;</DialogTitle>
               <DialogDescription>Lets give your pokemon a lovely nickname.</DialogDescription>
             </DialogHeader>
 
@@ -171,7 +171,12 @@ const PokemonDetailsContainer = ({ pokemon }: TPokemonDetailContainer) => {
             </section>
 
             <DialogFooter>
-              <Button disabled={!nickname || !isNicknameValid} onClick={handleSavePokemon} type="button">
+              <Button
+                className="bg-gradient-to-br from-emerald-400 to-blue-400 dark:text-white"
+                disabled={!nickname || !isNicknameValid}
+                onClick={handleSavePokemon}
+                type="button"
+              >
                 Save
               </Button>
             </DialogFooter>

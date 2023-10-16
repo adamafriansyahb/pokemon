@@ -7,6 +7,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
+import { toTitleCase } from '@/lib/utils';
 import { TReleaseAction, TCaughtPokemon } from '@/types';
 import Image from 'next/image';
 
@@ -28,9 +29,13 @@ const ReleasePokemonModal = ({
   const title =
     releaseType === 'all'
       ? 'Are you sure to release all of your pokemons?'
-      : `Are you sure to release ${selectedPokemon?.nickname} the ${selectedPokemon?.pokemon.name}?`;
+      : `Are you sure to release ${toTitleCase(selectedPokemon?.nickname || '')} the ${toTitleCase(
+          selectedPokemon?.pokemon.name || ''
+        )}?`;
 
-  const subtitle = `${releaseType === 'all' ? 'They' : selectedPokemon?.nickname} might be so sad parting with you..`;
+  const subtitle = `${
+    releaseType === 'all' ? 'They' : toTitleCase(selectedPokemon?.nickname || '')
+  } might be so sad to part with you..`;
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

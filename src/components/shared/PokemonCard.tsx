@@ -2,11 +2,12 @@
 
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { PokemonItem } from '@/types';
-import { Trash2 } from 'lucide-react';
+import { toTitleCase } from '@/lib/utils';
 
 type TPokemonCard = {
   caughtCount: number;
@@ -24,16 +25,16 @@ const PokemonCard = ({ caughtCount, nickname, onReleaseButtonClicked, pokemon }:
       whileInView={{ opacity: 1, y: 0 }}
     >
       <Card className="w-full">
-        <CardHeader className="p-2 -space-y-2">
+        <CardHeader className="p-2 -space-y-1">
           <p className="text-sm">#{pokemon.id}</p>
-          <CardTitle className="text-lg">{pokemon.name}</CardTitle>
+          <CardTitle className="text-lg">{toTitleCase(pokemon.name)}</CardTitle>
         </CardHeader>
         <CardContent className="px-2 pb-0">
           <div className="relative flex justify-center">
             <Image alt="Pokemon Image" className="object-cover" height={200} src={pokemon.image} width={200} />
           </div>
           {nickname && (
-            <p className="bg-gray-100 rounded-lg text-center text-sm font-medium p-1 overflow-clip text-ellipsis">
+            <p className="bg-gradient-to-br from-emerald-500 to-blue-500 rounded-lg text-white text-center text-sm font-medium p-1 overflow-clip text-ellipsis">
               {nickname}
             </p>
           )}
