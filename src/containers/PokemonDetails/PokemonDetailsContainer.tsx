@@ -2,22 +2,14 @@
 
 import { useContext, useState } from 'react';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
 import { motion } from 'framer-motion';
 import { useToast } from '@/components/ui/use-toast';
 import { Button } from '@/components/ui/button';
 import PokemonChipSection from './components/PokemonChipSection';
 import PokemonStatsChip from './components/PokemonStatsChip';
 import { PokemonContext } from '@/context/pokemonContext';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
-import { Input } from '@/components/ui/input';
 import { PokemonDetail, TPokemonType } from '@/types';
 import { pokemonBgColors, pokemonFromColors, pokemonToColors } from '@/lib/constants';
 import { cn, toTitleCase } from '@/lib/utils';
@@ -26,7 +18,11 @@ type TPokemonDetailContainer = {
   pokemon: PokemonDetail;
 };
 
+const CatchPokemonModal = dynamic(() => import('./components/CatchPokemonModal'));
+
 const PokemonDetailsContainer = ({ pokemon }: TPokemonDetailContainer) => {
+  const dominantType = pokemon.types[0].type.name as TPokemonType;
+
   const chipSections = [
     { title: 'Types', data: pokemon.types, name: 'type' },
     { title: 'Abilities', data: pokemon.abilities, name: 'ability' },
@@ -34,11 +30,9 @@ const PokemonDetailsContainer = ({ pokemon }: TPokemonDetailContainer) => {
   ];
 
   const { toast } = useToast();
-  const { canCatchPokemon, catchPokemon, countCaughtPokemonById, isNicknameAvailable } = useContext(PokemonContext);
+  const { canCatchPokemon, countCaughtPokemonById } = useContext(PokemonContext);
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [nickname, setNickname] = useState('');
-  const [isNicknameValid, setIsNicknameValid] = useState(true);
 
   const handleOpenDialog = () => {
     if (canCatchPokemon()) {
@@ -52,30 +46,6 @@ const PokemonDetailsContainer = ({ pokemon }: TPokemonDetailContainer) => {
       });
     }
   };
-
-  const handleNicknameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const nickname = e.target.value;
-    setNickname(nickname);
-
-    if (isNicknameAvailable(pokemon.id, nickname)) {
-      setIsNicknameValid(true);
-    } else {
-      setIsNicknameValid(false);
-    }
-  };
-
-  const handleSavePokemon = () => {
-    catchPokemon(nickname, pokemon);
-    setIsDialogOpen(false);
-    toast({
-      variant: 'default',
-      title: `Good job!, ${toTitleCase(nickname)} the ${toTitleCase(pokemon.name)} has joined your team`,
-      // eslint-disable-next-line quotes
-      description: `Go catch another pokemon to accompany ${toTitleCase(nickname)}.`,
-    });
-  };
-
-  const dominantType = pokemon.types[0].type.name as TPokemonType;
 
   const getGradient = () => {
     const secondaryType = pokemon.types.length > 1 ? (pokemon.types[1].type.name as TPokemonType) : dominantType;
@@ -107,7 +77,9 @@ const PokemonDetailsContainer = ({ pokemon }: TPokemonDetailContainer) => {
           </motion.h1>
 
           <motion.div initial={{ opacity: 0, x: 100 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.2 }}>
-            <Badge className="py-1" variant="gradient">{countCaughtPokemonById(pokemon.id)} owned</Badge>
+            <Badge className="py-1" variant="gradient">
+              {countCaughtPokemonById(pokemon.id)} owned
+            </Badge>
           </motion.div>
         </div>
 
@@ -144,45 +116,14 @@ const PokemonDetailsContainer = ({ pokemon }: TPokemonDetailContainer) => {
         ))}
       </section>
 
-      <Button onClick={handleOpenDialog} className={cn('fixed right-5 bottom-5 font-bold text-white dark:text-white', pokemonBgColors[dominantType])}>
+      <Button
+        onClick={handleOpenDialog}
+        className={cn('fixed right-5 bottom-5 font-bold text-white dark:text-white', pokemonBgColors[dominantType])}
+      >
         Catch
       </Button>
 
-      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <form>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>You caught {toTitleCase(pokemon.name)}! &#129395;</DialogTitle>
-              <DialogDescription>Lets give your pokemon a lovely nickname.</DialogDescription>
-            </DialogHeader>
-
-            <section className="flex flex-col space-y-1.5">
-              <div className="flex justify-center">
-                <Image
-                  alt="pokemon-img"
-                  src={pokemon.sprites.front_default}
-                  width={200}
-                  height={200}
-                  className="object-cover"
-                />
-              </div>
-              <Input onChange={handleNicknameChange} placeholder="Insert a nickname here..." />
-              {!isNicknameValid && <p className="text-xs text-red-600">Nickname is already used.</p>}
-            </section>
-
-            <DialogFooter>
-              <Button
-                className="bg-gradient-to-br from-emerald-400 to-blue-400 dark:text-white"
-                disabled={!nickname || !isNicknameValid}
-                onClick={handleSavePokemon}
-                type="button"
-              >
-                Save
-              </Button>
-            </DialogFooter>
-          </DialogContent>
-        </form>
-      </Dialog>
+      <CatchPokemonModal open={isDialogOpen} pokemon={pokemon} setOpen={setIsDialogOpen} />
     </section>
   );
 };

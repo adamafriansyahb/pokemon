@@ -19,13 +19,14 @@ type TPokemonCard = {
 
 const PokemonCard = ({ caughtCount, nickname, onReleaseButtonClicked, pokemon }: TPokemonCard) => {
   return (
-    <Link href={`/pokemon/${pokemon.name}`}>
       <motion.div
+        className="relative"
         initial={{ opacity: 0, y: 20 }}
         transition={{ duration: 0.4 }}
         viewport={{ once: true }}
         whileInView={{ opacity: 1, y: 0 }}
       >
+        <Link className="absolute w-full h-full z-[1]" href={`/pokemon/${pokemon.name}`} />
         <Card className="w-full">
           <CardHeader className="p-2 -space-y-1">
             <p className="text-sm">#{pokemon.id}</p>
@@ -37,13 +38,13 @@ const PokemonCard = ({ caughtCount, nickname, onReleaseButtonClicked, pokemon }:
             </div>
             {nickname && (
               <p className="bg-gradient-to-br from-emerald-500 to-blue-500 rounded-lg text-white text-center text-sm font-medium p-1 overflow-clip text-ellipsis">
-                {nickname}
+                {toTitleCase(nickname)}
               </p>
             )}
           </CardContent>
           <CardFooter className="flex justify-end p-2">
             {nickname ? (
-              <Button onClick={onReleaseButtonClicked} variant="destructive">
+              <Button className="z-10" onClick={onReleaseButtonClicked} variant="destructive">
                 <Trash2 />
               </Button>
             ) : (
@@ -52,7 +53,6 @@ const PokemonCard = ({ caughtCount, nickname, onReleaseButtonClicked, pokemon }:
           </CardFooter>
         </Card>
       </motion.div>
-    </Link>
   );
 };
 

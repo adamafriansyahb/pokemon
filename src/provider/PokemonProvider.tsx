@@ -12,16 +12,21 @@ export const PokemonProvider = ({ children }: { children: React.ReactNode }) => 
   }>(Object);
 
   const catchPokemon = (nickname: string, pokemon: PokemonDetail) => {
-    const newCaughtPokemon = caughtPokemons;
+    const newCaughtPokemons = caughtPokemons;
 
-    if (newCaughtPokemon[pokemon.id]) {
-      newCaughtPokemon[pokemon.id].push({ nickname, pokemon });
+    const caughtPokemonObj = {
+      nickname: nickname.toLowerCase(),
+      pokemon
+    };
+
+    if (newCaughtPokemons[pokemon.id]) {
+      newCaughtPokemons[pokemon.id].push(caughtPokemonObj);
     } else {
-      newCaughtPokemon[pokemon.id] = [{ nickname, pokemon }];
+      newCaughtPokemons[pokemon.id] = [caughtPokemonObj];
     }
 
-    setCaughtPokemons({ ...newCaughtPokemon });
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newCaughtPokemon));
+    setCaughtPokemons({ ...newCaughtPokemons });
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newCaughtPokemons));
   };
 
   const isNicknameAvailable = (id: number, nickname: string) => {
@@ -58,16 +63,17 @@ export const PokemonProvider = ({ children }: { children: React.ReactNode }) => 
   };
 
   const releaseSinglePokemon = (id: number, nickname: string) => {
-    const latestPokemon = caughtPokemons;
-    const filteredPokemon = latestPokemon[id].filter((pokemon) => pokemon.nickname !== nickname);
+    const latestPokemons = caughtPokemons;
+    const filteredPokemon = latestPokemons[id].filter((pokemon) => pokemon.nickname !== nickname);
 
     if (filteredPokemon.length) {
-      latestPokemon[id] = filteredPokemon;
+      latestPokemons[id] = filteredPokemon;
     } else {
-      delete latestPokemon[id];
+      delete latestPokemons[id];
     }
 
-    setCaughtPokemons({ ...latestPokemon });
+    setCaughtPokemons({ ...latestPokemons });
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(latestPokemons));
   };
 
   useEffect(() => {

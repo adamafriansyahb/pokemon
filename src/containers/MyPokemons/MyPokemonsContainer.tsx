@@ -1,17 +1,20 @@
 'use client';
 
 import { useCallback, useContext, useDeferredValue, useEffect, useMemo, useState } from 'react';
+import dynamic from 'next/dynamic';
+import Link from 'next/link';
+import { Trash2 } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import PokemonCard from '@/components/shared/PokemonCard';
 import { PokemonContext } from '@/context/pokemonContext';
 import { TReleaseAction, ReleaseTypes, TCaughtPokemon } from '@/types';
-import { Trash2 } from 'lucide-react';
 import PageTitle from '@/components/shared/PageTitle';
-import ReleasePokemonModal from './components/ReleasePokemonModal';
-import Link from 'next/link';
 import { useToast } from '@/components/ui/use-toast';
+import { toTitleCase } from '@/lib/utils';
+
+const ReleasePokemonModal = dynamic(() => import('./components/ReleasePokemonModal'));
 
 const MyPokemonsContainer = () => {
   const { toast } = useToast();
@@ -47,7 +50,7 @@ const MyPokemonsContainer = () => {
       title: `${
         releaseType === ReleaseTypes.all
           ? 'All Pokemons'
-          : `${selectedPokemon?.nickname} the ${selectedPokemon?.pokemon.name}`
+          : `${toTitleCase(selectedPokemon?.nickname || '')} the ${toTitleCase(selectedPokemon?.pokemon.name || '')}`
       } released!`,
       // eslint-disable-next-line quotes
       description: "Just don't regret your decision...",
@@ -102,8 +105,8 @@ const MyPokemonsContainer = () => {
             <Input
               className="md:max-w-sm"
               onChange={(e) => setSearchKey(e.target.value)}
-              type="text"
               placeholder="Search pokemons..."
+              type="text"
             />
             <Button onClick={() => handleModalTriggerClicked(ReleaseTypes.all)} variant="destructive">
               <Trash2 />
@@ -146,11 +149,11 @@ const MyPokemonsContainer = () => {
       )}
 
       <ReleasePokemonModal
-        open={isDialogOpen}
-        selectedPokemon={selectedPokemon}
-        releaseType={releaseType}
-        setOpen={setIsDialogOpen}
         onReleasePokemon={handleReleasePokemon}
+        open={isDialogOpen}
+        releaseType={releaseType}
+        selectedPokemon={selectedPokemon}
+        setOpen={setIsDialogOpen}
       />
     </div>
   );
