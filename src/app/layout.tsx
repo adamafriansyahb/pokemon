@@ -1,6 +1,7 @@
 import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import NextTopLoader from 'nextjs-toploader';
 import { Toaster } from '@/components/ui/toaster';
 import Navbar from '@/components/shared/Navbar';
 import { ApolloWrapper } from '@/apollo/lib/ApolloProvider';
@@ -21,6 +22,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ApolloWrapper>
           <ThemeProvider attribute="class" defaultTheme="dark" disableTransitionOnChange enableSystem={false}>
             <PokemonProvider>
+              <NextTopLoader color="#34d399" showSpinner={false} />
               <Navbar />
               <main className="flex justify-center px-4 pt-24 pb-20">
                 <section className="w-full lg:max-w-5xl">{children}</section>
