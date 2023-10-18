@@ -31,10 +31,10 @@ const CatchPokemonModal = ({ open, pokemon, setOpen }: TCatchPokemonModal) => {
   const [isNicknameValid, setIsNicknameValid] = useState(true);
 
   const handleNicknameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const nickname = e.target.value;
-    setNickname(nickname);
+    const inputtedNickname = e.target.value.trim();
+    setNickname(inputtedNickname);
 
-    if (isNicknameAvailable(pokemon.id, nickname)) {
+    if (isNicknameAvailable(pokemon.id, inputtedNickname)) {
       setIsNicknameValid(true);
     } else {
       setIsNicknameValid(false);
