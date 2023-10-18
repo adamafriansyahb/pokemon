@@ -27,7 +27,7 @@ export type TCaughtPokemon = {
   pokemon: PokemonDetail;
 };
 
-type TPokemonChip<T extends string> = {
+export type TPokemonChip<T extends string> = {
   [Key in T]: {
     name: string;
   };

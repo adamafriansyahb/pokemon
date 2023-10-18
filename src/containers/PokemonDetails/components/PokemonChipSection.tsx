@@ -2,12 +2,12 @@
 
 import { motion } from 'framer-motion';
 import { Badge } from '@/components/ui/badge';
-import { TPokemonType } from '@/types';
+import { TPokemonChip, TPokemonType } from '@/types';
 import { pokemonBgColors } from '@/lib/constants';
 import { cn } from '@/lib/utils';
 
 type TPokemonChipSection = {
-  data: any;
+  data: TPokemonChip<string>[];
   index: number;
   sectionName: string;
   title: string;
@@ -24,14 +24,19 @@ const PokemonChipSection = ({ data, index, sectionName, title }: TPokemonChipSec
         {`${title}:`}
       </motion.h2>
       <div className="flex flex-wrap gap-1.5 my-2">
-        {data.map((item: any, idx: number) => (
+        {data.map((item, idx) => (
           <motion.div
             key={idx}
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <Badge className={cn('text-base dark:bg-slate-800 dark:text-white', sectionName === 'type' && getColor(item.type.name))}>
+            <Badge
+              className={cn(
+                'text-base dark:bg-slate-800 dark:text-white',
+                sectionName === 'type' && getColor(item.type.name as TPokemonType)
+              )}
+            >
               {item[`${sectionName}`].name}
             </Badge>
           </motion.div>

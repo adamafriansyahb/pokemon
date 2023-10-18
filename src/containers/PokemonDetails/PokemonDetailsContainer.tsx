@@ -54,8 +54,8 @@ const PokemonDetailsContainer = ({ pokemon }: TPokemonDetailContainer) => {
   };
 
   return (
-    <section className="relative">
-      <section className={cn('flex justify-center pt-24 pb-5 -mx-4 sm:mx-0 -mt-24 rounded-b-[35px]', getGradient())}>
+    <div className="relative">
+      <div className={cn('flex justify-center pt-24 pb-5 -mx-4 sm:mx-0 -mt-24 rounded-b-[35px]', getGradient())}>
         <Image
           alt="pokemon-img"
           src={pokemon.sprites.front_default}
@@ -63,25 +63,25 @@ const PokemonDetailsContainer = ({ pokemon }: TPokemonDetailContainer) => {
           height={300}
           className="object-cover"
         />
-      </section>
+      </div>
 
       <section className="flex flex-col space-y-4 mt-5">
-        <div className="flex justify-between items-center">
+        <section className="flex justify-between items-center">
           <motion.h1
-            initial={{ opacity: 0, x: -100 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2 }}
             className="text-3xl lg:text-4xl font-bold tracking-wide"
           >
             {toTitleCase(pokemon.name)}
           </motion.h1>
 
-          <motion.div initial={{ opacity: 0, x: 100 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.2 }}>
+          <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2 }}>
             <Badge className="py-1" variant="gradient">
               {countCaughtPokemonById(pokemon.id)} owned
             </Badge>
           </motion.div>
-        </div>
+        </section>
 
         <section>
           <motion.h2
@@ -124,7 +124,7 @@ const PokemonDetailsContainer = ({ pokemon }: TPokemonDetailContainer) => {
       </Button>
 
       <CatchPokemonModal open={isDialogOpen} pokemon={pokemon} setOpen={setIsDialogOpen} />
-    </section>
+    </div>
   );
 };
 
