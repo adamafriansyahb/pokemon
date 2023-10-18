@@ -58,7 +58,7 @@ const PokemonDetailsContainer = ({ pokemon }: TPokemonDetailContainer) => {
       <div className={cn('flex justify-center pt-24 pb-5 -mx-4 sm:mx-0 -mt-24 rounded-b-[35px]', getGradient())}>
         <Image
           alt="pokemon-img"
-          src={pokemon.sprites.front_default}
+          src={pokemon.sprites.front_default || '/img/pikachu-silhouette.png'}
           width={300}
           height={300}
           className="object-cover"
@@ -66,19 +66,19 @@ const PokemonDetailsContainer = ({ pokemon }: TPokemonDetailContainer) => {
       </div>
 
       <section className="flex flex-col space-y-4 mt-5">
-        <section className="flex justify-between items-center">
+        <section className="flex justify-between items-center space-x-1">
           <motion.h1
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2 }}
-            className="text-3xl lg:text-4xl font-bold tracking-wide"
+            className="flex-1 text-3xl lg:text-4xl font-bold tracking-wide"
           >
             {toTitleCase(pokemon.name)}
           </motion.h1>
 
           <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2 }}>
             <Badge className="py-1" variant="gradient">
-              {countCaughtPokemonById(pokemon.id)} owned
+              {`${countCaughtPokemonById(pokemon.id)} owned`}
             </Badge>
           </motion.div>
         </section>

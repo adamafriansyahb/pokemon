@@ -30,11 +30,11 @@ const PokemonCard = ({ caughtCount, nickname, onReleaseButtonClicked, pokemon }:
         <Card className="w-full">
           <CardHeader className="p-2 -space-y-1">
             <p className="text-sm">#{pokemon.id}</p>
-            <CardTitle className="text-lg">{toTitleCase(pokemon.name)}</CardTitle>
+            <CardTitle className="text-base md:text-lg font-bold">{toTitleCase(pokemon.name)}</CardTitle>
           </CardHeader>
           <CardContent className="px-2 pb-0">
             <div className="relative flex justify-center">
-              <Image alt="Pokemon Image" className="object-cover" height={200} src={pokemon.image} width={200} />
+              <Image alt={`${pokemon.name}-img`} className="object-cover" height={200} src={pokemon.image} width={200} />
             </div>
             {nickname && (
               <p className="bg-gradient-to-br from-emerald-500 to-blue-500 rounded-lg text-white text-center text-sm font-medium p-1 overflow-clip text-ellipsis">

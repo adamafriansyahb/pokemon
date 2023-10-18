@@ -59,7 +59,7 @@ const AllPokemonsContainer = () => {
         loader={<Loader />}
         next={handleLoadMorePokemons}
       >
-        <section className="grid grid-cols-2 lg:grid-cols-4 gap-2.5">
+        <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5">
           {data.pokemons.results.map((pokemon) => (
             <PokemonCard key={pokemon.id} caughtCount={countCaughtPokemonById(pokemon.id)} pokemon={pokemon} />
           ))}
