@@ -46,7 +46,7 @@ const CatchPokemonModal = ({ open, pokemon, setOpen }: TCatchPokemonModal) => {
     setOpen(false);
     toast({
       variant: 'default',
-      title: `Good job!, ${toTitleCase(nickname)} the ${toTitleCase(pokemon.name)} has joined your team`,
+      title: `Good job! ${toTitleCase(nickname)} the ${toTitleCase(pokemon.name)} has joined your team.`,
       // eslint-disable-next-line quotes
       description: `Go catch another pokemon to accompany ${toTitleCase(nickname)}.`,
     });
@@ -55,7 +55,7 @@ const CatchPokemonModal = ({ open, pokemon, setOpen }: TCatchPokemonModal) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <form>
-        <DialogContent>
+        <DialogContent className="top-[30%] md:top-[50%]">
           <DialogHeader>
             <DialogTitle>You caught {toTitleCase(pokemon.name)}! &#129395;</DialogTitle>
             <DialogDescription>Lets give your pokemon a lovely nickname.</DialogDescription>
@@ -66,9 +66,9 @@ const CatchPokemonModal = ({ open, pokemon, setOpen }: TCatchPokemonModal) => {
               <Image
                 alt="pokemon-img"
                 src={pokemon.sprites.front_default}
-                width={200}
-                height={200}
-                className="object-cover"
+                width={100}
+                height={100}
+                className="object-cover sm:h-[150px] sm:w-[150px]"
               />
             </div>
             <Input onChange={handleNicknameChange} placeholder="Insert a nickname here..." />
